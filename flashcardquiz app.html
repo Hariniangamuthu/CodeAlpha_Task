@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flashcard Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #00bcd4;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0097a7;
+    }
+    #quiz-area, #score-area {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flashcard Quiz App</h1>
+  <button onclick="startQuiz()">Start Quiz</button>
+  <div id="quiz-area"></div>
+  <div id="score-area"></div>  <script>
+    const flashcards = [
+      { question: "How many Bits make one Byte?", answer: "8 Bites" },
+      { question: "Google is a Browser or a Search Engine?", answer: "search engine" },
+      { question: "Printer is an example of which types of device, Output or Input?", answer: "output" },
+      { question: "What is the full form of RAM?", answer: "Random access memory" },
+      { question: "Which electronic component was used in the first generation of computers?", answer: " vaccum tubes" }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById("score-area").innerText = "";
+      askQuestion();
+    }
+
+    function askQuestion() {
+      const quizArea = document.getElementById("quiz-area");
+      if (currentQuestion < flashcards.length) {
+        quizArea.innerHTML = `
+          <p>${flashcards[currentQuestion].question}</p>
+          <input type="text" id="user-answer" placeholder="Your answer">
+          <button onclick="submitAnswer()">Submit</button>
+        `;
+      } else {
+        quizArea.innerHTML = "";
+        document.getElementById("score-area").innerText = `Quiz complete! Your score: ${score}/${flashcards.length}`;
+      }
+    }
+
+    function submitAnswer() {
+      const userAnswer = document.getElementById("user-answer").value.trim();
+      const correctAnswer = flashcards[currentQuestion].answer;
+      if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        score++;
+      }
+      currentQuestion++;
+      askQuestion();
+    }
+  </script></body>
+</html>
